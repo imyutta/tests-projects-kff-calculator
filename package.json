@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "e2e": "npx playwright test",
+    "e2e:chrome": "npx playwright test --project=chromium --ui",
+    "e2e:headed": "npx playwright test --headed",
+    "e2e:headed:chrome": "npx playwright test --headed --project=chromium"
   },
   "keywords": [],
   "author": "",

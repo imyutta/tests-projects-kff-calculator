@@ -27,14 +27,27 @@ export default defineConfig({
     {
       name: "firefox",
       use: { ...devices["Desktop Firefox"] },
+      outputDir: "test-results/firefox",
     },
     {
       name: "webkit",
       use: { ...devices["Desktop Safari"] },
+      outputDir: "test-results/webkit",
     },
     {
       name: "Google Chrome",
       use: { ...devices["Desktop Chrome"] },
+      outputDir: "test-results/chrome",
+    },
+    {
+      name: "Pixel 5",
+      use: { ...devices["Pixel 5"] },
+      outputDir: "test-results/pixel5",
+    },
+    {
+      name: "iPhone 12",
+      use: { ...devices["iPhone 12"] },
+      outputDir: "test-results/iphone12",
     },
   ],
 });
