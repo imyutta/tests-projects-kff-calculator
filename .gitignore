@@ -1,2 +1,51 @@
 node_modules/
 test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Logs
+logs
+*.log
+logs/*.log
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Playwright specific
+playwright-report/
+test-results/
+.trace/
+.screenshot/
+videos/
+
+# Optional REPL history
+.node_repl_history
+
+# IDEs
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+tmp/
+temp/
