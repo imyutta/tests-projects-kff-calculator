@@ -8,7 +8,11 @@ accurate results for users seeking health insurance information.
 
 Calculator: https://www.kff.org/interactive/subsidy-calculator/
 
-## Project Structure
+## Test Plan is decribed here:
+
+https://docs.google.com/spreadsheets/d/1VEj2ooECIcOPXO8ecsrcXb_TMyzTHbkjFsWKDVRDzWw/edit?usp=sharing
+
+### Project Structure
 
 - `tests/` - Contains test files for various functionalities of the Health Insurance Marketplace Calculator.
 - `playwright.config.ts` - Playwright configuration file.
