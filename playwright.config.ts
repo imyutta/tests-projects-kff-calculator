@@ -15,6 +15,8 @@ export default defineConfig({
 
   use: {
     baseURL: "https://www.kff.org/interactive/subsidy-calculator/",
+    
+    globalSetup: require.resolve('./tests/test-setup.ts')
 
     trace: "on-first-retry",
 
