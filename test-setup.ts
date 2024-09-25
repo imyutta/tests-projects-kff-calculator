@@ -1,5 +1,5 @@
 import { test as base } from "@playwright/test";
-import { ProfilePage } from "../page-models/profile-page";
+import { ProfilePage } from "./page-models/profile-page";
 
 // Extend basic test by providing a "profilePage" fixture.
 export const test = base.extend<{ profilePage: ProfilePage }>({
