@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
 
 export class ProfilePage {
   private page: Page;
@@ -11,5 +11,15 @@ export class ProfilePage {
   // Method to navigate to the profile page
   async goto() {
     await this.page.goto("https://www.kff.org/interactive/subsidy-calculator/");
+  }
+
+  // Check if the page loaded correctly
+  async pageload() {
+    this.goto();
+    await expect(
+      this.getByRole("heading", { name: "Health Insurance Marketplace" })
+    ).toBeVisible();
+    await expect(this.getByPlaceholder("Yearly income")).toBeVisible();
+    await expect(this.getByRole("button", { name: "Submit" })).toBeVisible();
   }
 }

@@ -14,7 +14,9 @@ https://docs.google.com/spreadsheets/d/1VEj2ooECIcOPXO8ecsrcXb_TMyzTHbkjFsWKDVRD
 
 ### Project Structure
 
+- `page-models/` - Contains page models
 - `tests/` - Contains test files for various functionalities of the Health Insurance Marketplace Calculator.
 - `playwright.config.ts` - Playwright configuration file.
 - `package.json` - Project dependencies and scripts.
+- `test-setup` - This file handles Playwright's global configuration. It blocks all requests to analytics endpoints during test execution, ensuring no analytics data is sent. This prevents interference with the website's statistics while running tests
 - `README.md` - This file.
