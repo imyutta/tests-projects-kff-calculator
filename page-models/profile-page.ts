@@ -26,14 +26,14 @@ export class ProfilePage {
   }
 
   // Dynamic selectors
-  private readonly ageOfAdult = (index: number) =>
+  getAgeOfAdultSelector = (index: number) =>
     `select[name="adults[${index}][age]"]`;
-  private readonly isAdultUsesTobacco = (index: number) =>
+  getIsAdultUsesTobaccoSelector = (index: number) =>
     `select[id="adults[${index}][tobacco]-1"]`;
 
-  private readonly ageOfChild = (index: number) =>
+  getAgeOfChildSelector = (index: number) =>
     `select[name="children[${index}][age]"]`;
-  private readonly isChildUsesTobacco = (index: number) =>
+  getIsChildUsesTobaccoSelector = (index: number) =>
     `select[id="children[${index}][tobacco]-1"]`;
 
   async goto() {
