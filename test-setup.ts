@@ -2,7 +2,7 @@ import { test as base } from "@playwright/test";
 import { ProfilePage } from "./page-models/profile-page";
 
 // Extend basic test by providing a "profilePage" fixture.
-export const test = base.extend<{ profilePage: ProfilePage }>({
+const test = base.extend<{ profilePage: ProfilePage }>({
   // Define a fixture. Note that it can use built-in fixture "page"
   profilePage: async ({ page }, use) => {
     const profilePage = new ProfilePage(page);
@@ -16,3 +16,4 @@ export const test = base.extend<{ profilePage: ProfilePage }>({
     await use(profilePage);
   },
 });
+export default test;
