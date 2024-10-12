@@ -1,7 +1,7 @@
 import { type Page, type Locator, expect } from "@playwright/test";
 
 export class ProfilePage {
-  private readonly page: Page;
+  readonly page: Page;
 
   readonly header1!: Locator;
   readonly header4!: Locator;
@@ -17,6 +17,7 @@ export class ProfilePage {
   readonly numberOfAdults!: Locator;
   readonly numberOfChildren!: Locator;
   readonly submitButton!: Locator;
+  readonly errorMessage!: Locator;
 
   // Constructor to initialize the page object
   constructor(page: Page) {
@@ -43,6 +44,7 @@ export class ProfilePage {
     this.submitButton = this.page.locator(
       'input[type="submit"][value="Submit"]'
     );
+    this.errorMessage = this.page.locator("form-message");
   }
 
   // Dynamic selectors
@@ -59,6 +61,26 @@ export class ProfilePage {
   async goto() {
     await this.page.goto("https://www.kff.org/interactive/subsidy-calculator/");
     await this.page.waitForTimeout(2000);
+  }
+
+  async setStateAndZipCode(state: string, zipCode: string) {
+    await this.selectState.selectOption(state);
+    await this.zipCode.fill(zipCode);
+  }
+
+  async verifyStateAndCounty(expectedState: string, expectedCounty?: string) {
+    await expect(this.selectState).toHaveValue(expectedState);
+    if (expectedCounty) {
+      await expect(this.county).toBeVisible();
+      await expect(this.county).toContainText(expectedCounty);
+    } else {
+      await expect(this.county).not.toBeVisible();
+    }
+  }
+
+  async emitInputChangeEvent(locator: Locator) {
+    locator.dispatchEvent("change");
+    locator.dispatchEvent("input");
   }
 
   async fillAdultAge(values: number[]) {
