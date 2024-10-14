@@ -37,14 +37,14 @@ test.describe("KFF-Calculator", () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
       });
-      test("County updates correctly with new California Zip Code", async () => {
+      test("County updates correctly with new Zip Code from the same state)", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
         await profilePage.zipCode.fill("92070");
         await profilePage.verifyStateAndCounty("ca", "SAN DIEGO");
       });
 
-      test("Zip code cleared and county hidden after the state change", async () => {
+      test("Zip code cleared and county hidden after changing the state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
 
@@ -52,8 +52,10 @@ test.describe("KFF-Calculator", () => {
         await expect(profilePage.zipCode).toBeEmpty;
         await expect(profilePage.county).not.toBeVisible();
       });
-      test("The State updated and county hidden after zip code change", async () => {
+      test("State updated and county hidden after setting a zip code from a different state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
+        await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
+
         await profilePage.zipCode.fill("84080");
         await profilePage.emitInputChangeEvent(profilePage.zipCode);
         await profilePage.verifyStateAndCounty("ut");
