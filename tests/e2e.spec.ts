@@ -9,42 +9,44 @@ test.describe("KFF-Calculator", () => {
     await profilePage.goto();
   });
 
-  test("page loads correctly", async () => {
-    await expect(profilePage.header1).toContainText(
-      "Health Insurance Marketplace Calculator"
-    );
-    await expect(profilePage.header4).toContainText(
-      "Enter Information About Your Household"
-    );
+  test.describe("Smoke tests", () => {
+    test("SMK-TC001: Page loads correctly", async () => {
+      await expect(profilePage.header1).toContainText(
+        "Health Insurance Marketplace Calculator"
+      );
+      await expect(profilePage.header4).toContainText(
+        "Enter Information About Your Household"
+      );
 
-    await expect(profilePage.header1).toBeVisible();
-    await expect(profilePage.header4).toBeVisible();
-    await expect(profilePage.selectState).toBeVisible();
-    await expect(profilePage.incomeTypeDollars).toBeVisible();
-    await expect(profilePage.incomeTypePercent).toBeVisible();
-    await expect(profilePage.income).toBeVisible();
-    await expect(profilePage.spouseCoverageAvailable).toBeVisible();
-    await expect(profilePage.spouseCoverageNotAvailable).toBeVisible();
-    await expect(profilePage.numberOfPeopleInFamily).toBeVisible();
-    await expect(profilePage.numberOfAdults).toBeVisible();
-    await expect(profilePage.numberOfChildren).toBeVisible();
-    await expect(profilePage.submitButton).toBeVisible();
+      await expect(profilePage.header1).toBeVisible();
+      await expect(profilePage.header4).toBeVisible();
+      await expect(profilePage.selectState).toBeVisible();
+      await expect(profilePage.incomeTypeDollars).toBeVisible();
+      await expect(profilePage.incomeTypePercent).toBeVisible();
+      await expect(profilePage.income).toBeVisible();
+      await expect(profilePage.spouseCoverageAvailable).toBeVisible();
+      await expect(profilePage.spouseCoverageNotAvailable).toBeVisible();
+      await expect(profilePage.numberOfPeopleInFamily).toBeVisible();
+      await expect(profilePage.numberOfAdults).toBeVisible();
+      await expect(profilePage.numberOfChildren).toBeVisible();
+      await expect(profilePage.submitButton).toBeVisible();
+    });
   });
 
   test.describe("Functional tests", () => {
-    test.describe("Zip Code and County mapping", () => {
-      test("Displays correct county for valid California Zip Code", async () => {
+    test.describe("State, Zip Code and County mapping", () => {
+      test("FUNC-STATE-TC001: Displays correct county for valid California Zip Code", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
       });
-      test("County updates correctly with new Zip Code from the same state)", async () => {
+      test("FUNC-STATE-TC002: County updates correctly with new Zip Code from the same state)", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
         await profilePage.zipCode.fill("92070");
         await profilePage.verifyStateAndCounty("ca", "SAN DIEGO");
       });
 
-      test("Zip code cleared and county hidden after changing the state", async () => {
+      test("FUNC-STATE-TC003: Zip code cleared and county hidden after changing the state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
 
@@ -52,7 +54,7 @@ test.describe("KFF-Calculator", () => {
         await expect(profilePage.zipCode).toBeEmpty;
         await expect(profilePage.county).not.toBeVisible();
       });
-      test("State updated and county hidden after setting a zip code from a different state", async () => {
+      test("FUNC-STATE-TC004: State updated and county hidden after setting a zip code from a different state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
 
@@ -60,7 +62,7 @@ test.describe("KFF-Calculator", () => {
         await profilePage.emitInputChangeEvent(profilePage.zipCode);
         await profilePage.verifyStateAndCounty("ut");
       });
-      test("Zip Code cleared and county hidden after selecting 'US Average' state", async () => {
+      test("FUNC-STATE-TC005: Zip Code cleared and county hidden after selecting 'US Average' state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
 

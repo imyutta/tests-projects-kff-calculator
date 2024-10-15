@@ -13,8 +13,6 @@ export default defineConfig({
 
   timeout: 10000,
 
-  globalSetup: require.resolve("./test-setup.ts"),
-
   use: {
     baseURL: "https://www.kff.org/interactive/subsidy-calculator/",
 
