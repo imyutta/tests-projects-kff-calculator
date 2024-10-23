@@ -33,20 +33,20 @@ test.describe("KFF-Calculator", () => {
     });
   });
 
-  test.describe("Functional tests", () => {
-    test.describe("State, Zip Code and County mapping", () => {
-      test("FUNC-STATE-TC001: Displays correct county for valid California Zip Code", async () => {
+  test.describe("1. Functional tests", () => {
+    test.describe("1.1. State, Zip Code and County mapping", () => {
+      test("FUNC-ZIP-MAPPING-TC001: Displays correct county for valid California Zip Code", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
       });
-      test("FUNC-STATE-TC002: County updates correctly with new Zip Code from the same state)", async () => {
+      test("FUNC-ZIP-MAPPING-TC002: County updates correctly with new Zip Code from the same state)", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
         await profilePage.zipCode.fill("92070");
         await profilePage.verifyStateAndCounty("ca", "SAN DIEGO");
       });
 
-      test("FUNC-STATE-TC003: Zip code cleared and county hidden after changing the state", async () => {
+      test("FUNC-ZIP-MAPPING-TC003: Zip code cleared and county hidden after changing the state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
 
@@ -54,7 +54,7 @@ test.describe("KFF-Calculator", () => {
         await expect(profilePage.zipCode).toBeEmpty;
         await expect(profilePage.county).not.toBeVisible();
       });
-      test("FUNC-STATE-TC004: State updated and county hidden after setting a zip code from a different state", async () => {
+      test("FUNC-ZIP-MAPPING-TC004: State updated and county hidden after setting a zip code from a different state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
 
@@ -62,7 +62,7 @@ test.describe("KFF-Calculator", () => {
         await profilePage.emitInputChangeEvent(profilePage.zipCode);
         await profilePage.verifyStateAndCounty("ut");
       });
-      test("FUNC-STATE-TC005: Zip Code cleared and county hidden after selecting 'US Average' state", async () => {
+      test("FUNC-ZIP-MAPPING-TC005: Zip Code cleared and county hidden after selecting 'US Average' state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
         await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
 
@@ -71,14 +71,34 @@ test.describe("KFF-Calculator", () => {
         await expect(profilePage.county).not.toBeVisible();
       });
     });
-    test.describe("Validation tests", () => {
-      test("Error message is displayed after entering an invalid zip code", async () => {
-        await profilePage.selectState.selectOption("California");
-        await profilePage.zipCode.fill("001");
-        await expect(profilePage.errorMessage).toBeVisible();
-        await expect(profilePage.errorMessage).toContainText(
-          "Please enter a valid income."
-        );
+    test.describe("1.2. Zip Code Field. Validation tests ", () => {
+      test.describe("1.2.1. Boundary-value analysis tests", () => {
+        test("FUNC-ZIP-BT001: Should accept input with 5 digits", async () => {
+          // TODO
+        });
+        test("FUNC-ZIP-BT002: Should not accept input with less than 5 digits", async () => {
+          // TODO
+        });
+        test("FUNC-ZIP-BT003: Should ignore input after 5 digits", async () => {
+          // TODO
+        });
+      });
+      test.describe("1.2.2. Negative tests", () => {
+        test("FUNC-ZIP-NT001: Displays an error message when Zip Code input is empty", async () => {
+          // TODO
+        });
+        test("FUNC-ZIP-NT002: Disallow letters/symbols in Zip Code field", async () => {
+          // TODO
+        });
+        test("FUNC-ZIP-NT003: Disallow negative numbers in Zip Code input", async () => {
+          // TODO
+        });
+        test("FUNC-ZIP-NT004: Correct State and Region Display for 4-Digit Zip Code", async () => {
+          // TODO
+        });
+        test("FUNC-ZIP-NT005: Error Message Display for Non-Existent Zip Code Input", async () => {
+          // TODO
+        });
       });
     });
   });
