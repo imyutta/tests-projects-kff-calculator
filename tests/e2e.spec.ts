@@ -1,6 +1,6 @@
 import test from "../test-setup";
 import { expect, Locator } from "@playwright/test";
-import { ProfilePage } from "../page-models/profile-page";
+import { ProfilePage, IncomeType } from "../page-models/profile-page";
 
 test.describe("KFF-Calculator", () => {
   let profilePage: ProfilePage;
@@ -22,7 +22,7 @@ test.describe("KFF-Calculator", () => {
       await expect(profilePage.header4).toBeVisible();
       await expect(profilePage.selectState).toBeVisible();
       await expect(profilePage.incomeTypeDollars).toBeVisible();
-      await expect(profilePage.incomeTypePercent).toBeVisible();
+      await expect(profilePage.incomeTypePercentOfPoverty).toBeVisible();
       await expect(profilePage.income).toBeVisible();
       await expect(profilePage.spouseCoverageAvailable).toBeVisible();
       await expect(profilePage.spouseCoverageNotAvailable).toBeVisible();
@@ -75,15 +75,24 @@ test.describe("KFF-Calculator", () => {
       test.describe("1.2.1. Boundary-value analysis tests", () => {
         test("FUNC-ZIP-BT001: Should accept input with 5 digits", async () => {
           // TODO
+          await profilePage.setStateAndZipCode("California", "95051");
+          await profilePage.verifyStateAndCounty("ca", "SANTA CLARA");
         });
         test("FUNC-ZIP-BT002: Should not accept input with less than 5 digits", async () => {
-          // TODO
+          await profilePage.setStateAndZipCode("California", "5077");
+          await profilePage.fillFormElements({});
+
+          await profilePage.submitForm();
+          await expect(profilePage.errorMessage).toBeVisible();
+          await expect(profilePage.errorMessage).toHaveText(
+            "Please enter a zip code."
+          );
         });
         test("FUNC-ZIP-BT003: Should ignore input after 5 digits", async () => {
           // TODO
         });
       });
-      test.describe("1.2.2. Negative tests", () => {
+      test.describe("1.2.2. Incorrect input", () => {
         test("FUNC-ZIP-NT001: Displays an error message when Zip Code input is empty", async () => {
           // TODO
         });
