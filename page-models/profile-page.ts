@@ -91,8 +91,17 @@ export class ProfilePage {
     await this.zipCode.fill(zipCode);
   }
 
-  async verifyStateAndCounty(expectedState: string, expectedCounty?: string) {
+  async verifyStateZipCounty(
+    expectedState: string,
+    expectedCounty?: string,
+    expectedZip?: string
+  ) {
     await expect(this.selectState).toHaveValue(expectedState);
+
+    if (expectedZip) {
+      await expect(this.zipCode).toHaveValue(expectedZip);
+    }
+
     if (expectedCounty) {
       await expect(this.county).toBeVisible();
       await expect(this.county).toContainText(expectedCounty);

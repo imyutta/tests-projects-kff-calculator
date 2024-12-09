@@ -37,18 +37,18 @@ test.describe("KFF-Calculator", () => {
     test.describe("1.1. State, Zip Code and County mapping", () => {
       test("FUNC-ZIP-MAPPING-TC001: Displays correct county for valid California Zip Code", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
-        await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
+        await profilePage.verifyStateZipCounty("ca", "LOS ANGELES");
       });
       test("FUNC-ZIP-MAPPING-TC002: County updates correctly with new Zip Code from the same state)", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
-        await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
+        await profilePage.verifyStateZipCounty("ca", "LOS ANGELES");
         await profilePage.zipCode.fill("92070");
-        await profilePage.verifyStateAndCounty("ca", "SAN DIEGO");
+        await profilePage.verifyStateZipCounty("ca", "SAN DIEGO");
       });
 
       test("FUNC-ZIP-MAPPING-TC003: Zip code cleared and county hidden after changing the state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
-        await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
+        await profilePage.verifyStateZipCounty("ca", "LOS ANGELES");
 
         await profilePage.selectState.selectOption("Utah");
         await expect(profilePage.zipCode).toBeEmpty;
@@ -56,15 +56,15 @@ test.describe("KFF-Calculator", () => {
       });
       test("FUNC-ZIP-MAPPING-TC004: State updated and county hidden after setting a zip code from a different state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
-        await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
+        await profilePage.verifyStateZipCounty("ca", "LOS ANGELES");
 
         await profilePage.zipCode.fill("84080");
         await profilePage.emitInputChangeEvent(profilePage.zipCode);
-        await profilePage.verifyStateAndCounty("ut");
+        await profilePage.verifyStateZipCounty("ut");
       });
       test("FUNC-ZIP-MAPPING-TC005: Zip Code cleared and county hidden after selecting 'US Average' state", async () => {
         await profilePage.setStateAndZipCode("California", "90210");
-        await profilePage.verifyStateAndCounty("ca", "LOS ANGELES");
+        await profilePage.verifyStateZipCounty("ca", "LOS ANGELES");
 
         await profilePage.selectState.selectOption("US Average");
         await expect(profilePage.zipCode).not.toBeVisible();
@@ -76,7 +76,7 @@ test.describe("KFF-Calculator", () => {
         test("FUNC-ZIP-BT001: Should accept input with 5 digits", async () => {
           // TODO
           await profilePage.setStateAndZipCode("California", "95051");
-          await profilePage.verifyStateAndCounty("ca", "SANTA CLARA");
+          await profilePage.verifyStateZipCounty("ca", "SANTA CLARA");
         });
         test("FUNC-ZIP-BT002: Should not accept input with less than 5 digits", async () => {
           await profilePage.setStateAndZipCode("California", "5077");
@@ -89,7 +89,8 @@ test.describe("KFF-Calculator", () => {
           );
         });
         test("FUNC-ZIP-BT003: Should ignore input after 5 digits", async () => {
-          // TODO
+          await profilePage.setStateAndZipCode("California", "950511");
+          await profilePage.verifyStateZipCounty("ca", "SANTA CLARA", "95051");
         });
       });
       test.describe("1.2.2. Incorrect input", () => {
