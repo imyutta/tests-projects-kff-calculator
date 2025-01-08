@@ -6,15 +6,21 @@ export enum IncomeType {
 
 export type FormParams = {
   incomeType?: IncomeType;
-  income?: number;
+  income?: number | string;
   isSpouseCoverageAvailable?: boolean;
   numberOfPeople?: number;
-  numberOfAdults?: number;
+  numberOfAdults?: number | null;
   adult0Age?: number;
   doesAdult0UseTobacco?: boolean;
-  numberOfChildren?: number;
+  numberOfChildren?: number | null;
   child0Age?: number;
   doesChild0UseTobacco?: boolean;
+};
+
+export type ZipStateCountyParams = {
+  expectedState: string;
+  expectedCounty?: string;
+  expectedZip?: string;
 };
 
 export class ProfilePage {
@@ -91,11 +97,11 @@ export class ProfilePage {
     await this.zipCode.fill(zipCode);
   }
 
-  async verifyStateZipCounty(
-    expectedState: string,
-    expectedCounty?: string,
-    expectedZip?: string
-  ) {
+  async verifyStateZipCounty({
+    expectedState,
+    expectedCounty,
+    expectedZip,
+  }: ZipStateCountyParams) {
     await expect(this.selectState).toHaveValue(expectedState);
 
     if (expectedZip) {
@@ -170,10 +176,15 @@ export class ProfilePage {
     await this.income.fill(income.toString());
     await this.setSpouseCoverage(isSpouseCoverageAvailable);
     await this.numberOfPeopleInFamily.selectOption(numberOfPeople.toString());
-    await this.numberOfAdults.selectOption(numberOfAdults.toString());
-    await this.setAdultDetails(0, adult0Age, doesAdult0UseTobacco);
-    await this.numberOfChildren.selectOption(numberOfChildren.toString());
-    await this.setChildDetails(0, child0Age, doesChild0UseTobacco);
+
+    if (numberOfAdults !== null) {
+      await this.numberOfAdults.selectOption(numberOfAdults.toString());
+      await this.setAdultDetails(0, adult0Age, doesAdult0UseTobacco);
+    }
+    if (numberOfChildren !== null) {
+      await this.numberOfChildren.selectOption(numberOfChildren.toString());
+      await this.setChildDetails(0, child0Age, doesChild0UseTobacco);
+    }
   }
 
   async fillAdultAge(values: number[]) {
