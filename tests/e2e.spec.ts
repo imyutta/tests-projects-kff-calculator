@@ -173,6 +173,22 @@ test.describe("KFF-Calculator", () => {
         });
       });
       test.describe("1.3. Income field. Validation tests", () => {
+        test("FUNC-INC-PT001: Handles a Valid yearly Income Input '$100000' correctly", async () => {
+          await profilePage.fillFormElements({
+            income: 100000,
+          });
+          await profilePage.submitForm();
+          await expect(profilePage.errorMessage).not.toBeVisible();
+          await expect(profilePage.header2).toBeVisible();
+        });
+        test("FUNC-INC-PT002: Handles a Valid yearly Income Input '$0' correctly", async () => {
+          await profilePage.fillFormElements({
+            income: 0,
+          });
+          await profilePage.submitForm();
+          await expect(profilePage.errorMessage).not.toBeVisible();
+          await expect(profilePage.header2).toBeVisible();
+        });
         test("FUNC-INC-NT001: Error Message Display for an Empty yearly Income Input", async () => {
           await profilePage.fillFormElements({
             income: undefined,
@@ -186,6 +202,7 @@ test.describe("KFF-Calculator", () => {
         test("FUNC-INC-NT002: Error Message Display for Negative Numbers in Yearly Income Field", async () => {
           await profilePage.fillFormElements({
             income: -100000,
+            isSpouseCoverageAvailable: false,
           });
           await profilePage.submitForm();
           await expect(profilePage.errorMessage).toBeVisible();
